@@ -106,6 +106,8 @@ class Game {
 
   endGame(msg) {
     alert(msg);
+    const top = document.getElementById("column-top");
+    top.removeEventListener('click', this.handleClick);
   }
 
 /** handleClick: handle click of column top to play piece */
