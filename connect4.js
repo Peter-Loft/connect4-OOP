@@ -13,10 +13,11 @@
 // let currPlayer = 1; // active player: 1 or 2
 // let board = []; // array of rows, each row is array of cells  (board[y][x])
 
-let newGameButton = document.getElementById("new-game");
+let newGameButton = document.getElementById("new-game-form");
 newGameButton.addEventListener("click", newGame);
 
-function newGame(){
+function newGame(e){
+  e.preventDefault();
   document.getElementById('board').remove();
   let table = document.createElement('table');
   table.setAttribute("id", "board");
@@ -32,8 +33,12 @@ class Game {
 
     this.board = [];
 
-    this.player1 = new Player("orange", "Player 1");
-    this.player2 = new Player("purple", "Player 2");
+    let player1Color = document.getElementById("player-1").value;
+    let player2Color = document.getElementById("player-2").value;
+
+
+    this.player1 = new Player(player1Color, "Player 1");
+    this.player2 = new Player(player2Color, "Player 2");
 
     this.currPlayer = this.player1;
     this.handleClick = this.handleClick.bind(this);
