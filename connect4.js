@@ -22,8 +22,7 @@ class Game {
     this.board = [];
     this.currPlayer = 1;
     this.handleClick = this.handleClick.bind(this);
-// probably not gonna need below line in comment
-    // this.findSpotForCol = this.findSpotForCol.bind(this);
+
     this.makeBoard();
     this.makeHtmlBoard();
   }
@@ -107,6 +106,7 @@ class Game {
     }
     
     // check for tie (full board)
+    // refactor for first row only
     if (this.board.every(row => row.every(cell => cell))) {
       return this.endGame('Tie!');
     }
@@ -117,12 +117,13 @@ class Game {
 
 
   checkForWin() {
-    // Better way to pass these attributes into _win()?
-    let h = this.height;
-    let w = this.width;
-    let b = this.board;
-    let c = this.currPlayer;
-    function _win(cells) {
+    // Better way to pass these attributes into _win()? Yes. Yes there are.
+    // let h = this.height;
+    // let w = this.width;
+    // let b = this.board;
+    // let c = this.currPlayer;
+
+    const _win = (cells) => {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
       //  - returns true if all are legal coordinates & all match currPlayer
@@ -130,12 +131,13 @@ class Game {
       return cells.every(
         ([y, x]) =>
           y >= 0 &&
-          y < h &&
+          y < this.height &&
           x >= 0 &&
-          x < w &&
-          b[y][x] === c
+          x < this.width &&
+          this.board[y][x] === this.currPlayer
       );
     }
+    // let _winBound = _win.bind(this)
   
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
