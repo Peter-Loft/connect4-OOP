@@ -117,6 +117,11 @@ class Game {
 
 
   checkForWin() {
+    // Better way to pass these attributes into _win()?
+    let h = this.height;
+    let w = this.width;
+    let b = this.board;
+    let c = this.currPlayer;
     function _win(cells) {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
@@ -125,10 +130,10 @@ class Game {
       return cells.every(
         ([y, x]) =>
           y >= 0 &&
-          y < this.height &&
+          y < h &&
           x >= 0 &&
-          x < this.width &&
-          this.board[y][x] === this.currPlayer
+          x < w &&
+          b[y][x] === c
       );
     }
   
