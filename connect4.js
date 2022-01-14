@@ -13,9 +13,20 @@
 // let currPlayer = 1; // active player: 1 or 2
 // let board = []; // array of rows, each row is array of cells  (board[y][x])
 
+let newGameButton = document.getElementById("new-game");
+newGameButton.addEventListener("click", newGame);
+
+function newGame(){
+  document.getElementById('board').remove();
+  let table = document.createElement('table');
+  table.setAttribute("id", "board");
+  document.getElementById("game").appendChild(table);
+  new Game(6,7);
+}
+
 class Game {
 
-  constructor(height, width) {
+  constructor(height = 6, width = 7) {
     this.height = height;
     this.width = width;
 
@@ -27,12 +38,18 @@ class Game {
     this.makeHtmlBoard();
   }
 
+
+/** makeBoard: create in-JS board structure:
+ *   board = array of rows, each row is array of cells  (board[y][x])
+ */
   makeBoard() {
     for (let y = 0; y < this.height; y++) {
       this.board.push(Array.from({ length: this.width }));
     }
   }
-  
+
+
+/** makeHtmlBoard: make HTML table and row of column tops. */
   makeHtmlBoard() {
     const htmlBoard = document.getElementById('board');
   
@@ -62,6 +79,8 @@ class Game {
       htmlBoard.append(row);
     }
   }
+
+  /** findSpotForCol: given column x, return top empty y (null if filled) */
   
   findSpotForCol(x) {
     for (let y = this.height - 1; y >= 0; y--) {
@@ -72,6 +91,7 @@ class Game {
     return null;
   }
 
+/** placeInTable: update DOM to place piece into HTML table of board */
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
@@ -82,9 +102,13 @@ class Game {
     spot.append(piece);
   }
 
+  /** endGame: announce game end */
+
   endGame(msg) {
     alert(msg);
   }
+
+/** handleClick: handle click of column top to play piece */
 
   handleClick(evt) {
     // get x from ID of clicked cell
@@ -116,6 +140,7 @@ class Game {
   }
 
 
+/** checkForWin: check board cell-by-cell for "does a win start here?" */
   checkForWin() {
     // Better way to pass these attributes into _win()? Yes. Yes there are.
     // let h = this.height;
@@ -305,4 +330,4 @@ class Game {
 //   }
 // }
 
-new Game(6,7);
+
