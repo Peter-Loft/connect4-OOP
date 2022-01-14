@@ -31,7 +31,11 @@ class Game {
     this.width = width;
 
     this.board = [];
-    this.currPlayer = 1;
+
+    this.player1 = new Player("orange", "Player 1");
+    this.player2 = new Player("purple", "Player 2");
+
+    this.currPlayer = this.player1;
     this.handleClick = this.handleClick.bind(this);
 
     this.makeBoard();
@@ -95,7 +99,9 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`p${this.currPlayer}`);
+    // ----
+    // piece.classList.add(this.currPlayer.name);
+    piece.style.backgroundColor = this.currPlayer.color;
     piece.style.top = -50 * (y + 2);
   
     const spot = document.getElementById(`${y}-${x}`);
@@ -128,7 +134,7 @@ class Game {
     
     // check for win
     if (this.checkForWin()) {
-      return this.endGame(`Player ${this.currPlayer} won!`);
+      return this.endGame(`${this.currPlayer.name} won!`);
     }
     
     // check for tie (full board)
@@ -138,7 +144,9 @@ class Game {
     }
       
     // switch players
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === this.player1 
+    ? this.player2 
+    : this.player1;
   }
 
 
@@ -182,16 +190,14 @@ class Game {
       }
     }
   }
-
-
-
-
-
-
-
 }
 
-
+class Player {
+  constructor(color, name) {
+    this.color = color;
+    this.name = name;
+  }
+}
 
 
 
